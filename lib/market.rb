@@ -68,7 +68,8 @@ class Market
         else
           vendor.inventory[item] -= quantity
         end
-        quantity = vendor.inventory[item] - quantity
+        # binding.pry
+        return quantity = vendor.inventory[item] - quantity
       end
       end
   end
