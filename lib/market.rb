@@ -47,4 +47,29 @@ class Market
     end
     return total_inventory
   end
+
+  def sell(item,quantity)
+    if total_inventory[item] == nil || total_inventory[item] < quantity
+      false
+    else
+      reduce_inventory(item,quantity)
+      true
+    end
+  end
+
+  def reduce_inventory(item,quantity)
+    vendors_with_item = @vendors.find_all do |vendor|
+                        vendor.inventory.include?(item)
+                      end
+    vendors_with_item.map do |vendor|
+      while quantity > 0
+        if vendor.inventory[item] <= quantity
+          vendor.inventory[item] = 0
+        else
+          vendor.inventory[item] -= quantity
+        end
+        quantity = vendor.inventory[item] - quantity
+      end
+      end
+  end
 end
